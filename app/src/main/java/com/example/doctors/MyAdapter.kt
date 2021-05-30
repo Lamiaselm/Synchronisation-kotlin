@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.doctors.UrlImage.Companion.url
 
 class MyAdapter(val context: MainActivity, var data:List<Doctor>): RecyclerView.Adapter<MyViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -22,7 +24,7 @@ class MyAdapter(val context: MainActivity, var data:List<Doctor>): RecyclerView.
         holder.prenom.text=data[position].prenom
         holder.num.text=data[position].num
         holder.spec.text=data[position].speciality
-        holder.img.setImageResource(R.drawable.pic1)
+        Glide.with(context).load(url+data[position].img).into(holder.img)
         //CALL  PHONE NUMBER FUNCTION
         holder.num.setOnClickListener { view ->
 

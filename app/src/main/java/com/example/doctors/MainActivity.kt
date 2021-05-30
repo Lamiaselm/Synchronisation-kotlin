@@ -26,10 +26,14 @@ class MainActivity : AppCompatActivity() {
                 {   val data = response.body()
                     if (data!=null)
                     {
+
+
                         list_doc.apply {
                             list_doc.layoutManager = LinearLayoutManager(this@MainActivity)
                             list_doc.adapter = MyAdapter(this@MainActivity,data)
+
                         }
+
 
 
 
@@ -46,12 +50,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun loadData():List<Doctor> {
-        val data = mutableListOf<Doctor>()
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic1,36.72242413411826, 3.168844018174953))
-        data.add(Doctor("Selmane","Lamia","05554678","pediate",R.drawable.pic2,36.71132958509183, 3.160282609052669))
 
-        return data
-    }
 
 }
