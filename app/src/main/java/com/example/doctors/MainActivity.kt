@@ -13,8 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        list_doc.layoutManager = LinearLayoutManager(this)
-        list_doc.adapter = MyAdapter(this,loadData())
+
         getDocs()
     }
 
@@ -27,13 +26,16 @@ class MainActivity : AppCompatActivity() {
                 {   val data = response.body()
                     if (data!=null)
                     {
-                        for (doc in data)
-                        {
-                            Toast.makeText(this@MainActivity,doc.speciality,Toast.LENGTH_SHORT).show()
-
+                        list_doc.apply {
+                            list_doc.layoutManager = LinearLayoutManager(this@MainActivity)
+                            list_doc.adapter = MyAdapter(this@MainActivity,data)
                         }
+
+
+
                     }
                 }
+
             }
 
             override fun onFailure(call: Call<List<Doctor>>, t: Throwable) {
@@ -48,17 +50,7 @@ class MainActivity : AppCompatActivity() {
         val data = mutableListOf<Doctor>()
         data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic1,36.72242413411826, 3.168844018174953))
         data.add(Doctor("Selmane","Lamia","05554678","pediate",R.drawable.pic2,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Souha","05554678","dentiste",R.drawable.pic3,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Issam","05554678","dentiste",R.drawable.pic4,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Abdelkader","05554678","dentiste",R.drawable.pic5,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Halim","05554678","dentiste",R.drawable.pic6,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic8,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic1,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic3,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic4,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic5,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic6,36.71132958509183, 3.160282609052669))
-        data.add(Doctor("Nekamiche","Noha","05554678","dentiste",R.drawable.pic7,36.71132958509183, 3.160282609052669))
+
         return data
     }
 

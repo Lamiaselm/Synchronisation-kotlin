@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
     val endpoint :Endpoint by lazy {
-        Retrofit.Builder().baseUrl("http://192.168.1.6:8082/"). addConverterFactory(
+        Retrofit.Builder().baseUrl("https://0dee707d1181.ngrok.io/"). addConverterFactory(
             GsonConverterFactory.create()). build().create(Endpoint::class.java)
     }
 }

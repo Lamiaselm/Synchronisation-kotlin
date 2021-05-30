@@ -1,6 +1,5 @@
 package com.example.doctors
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -10,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MyAdapter (val context: Context, var data:List<Doctor>): RecyclerView.Adapter<MyViewHolder>(){
+class MyAdapter(val context: MainActivity, var data:List<Doctor>): RecyclerView.Adapter<MyViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.doctor_element, parent, false))
     }
@@ -23,7 +22,7 @@ class MyAdapter (val context: Context, var data:List<Doctor>): RecyclerView.Adap
         holder.prenom.text=data[position].prenom
         holder.num.text=data[position].num
         holder.spec.text=data[position].speciality
-        holder.img.setImageResource(data[position].img)
+        holder.img.setImageResource(R.drawable.pic1)
         //CALL  PHONE NUMBER FUNCTION
         holder.num.setOnClickListener { view ->
 
