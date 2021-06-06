@@ -1,4 +1,4 @@
-package com.example.doctors
+package com.example.doctors.DataClass
 
 import java.time.LocalDate
 import java.time.LocalTime

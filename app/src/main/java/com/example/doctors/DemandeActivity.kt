@@ -3,6 +3,10 @@ package com.example.doctors
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.work.*
+import com.example.doctors.Entities.DemandeEntity
+import com.example.doctors.RoomDAO.RoomService
+import com.example.doctors.Service.SyncService
 import kotlinx.android.synthetic.main.activity_demande.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,38 +17,28 @@ class DemandeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demande)
         send.setOnClickListener {
-            val obj=obj.text.toString()
-            val msg=msg.text.toString()
-            if(obj.isEmpty()){
-                Toast.makeText(this,"verifier que vous avez entrer l'objet", Toast.LENGTH_LONG).show()
-            }else{
-                if(msg.isEmpty()){
-                    Toast.makeText(this,"verifier que vous avez entrer votre demande", Toast.LENGTH_LONG).show()
-                }
-                else{
-                    val demande=Demande(obj,msg,1)
-                    val request=RetrofitService.sendEndpoint.send(demande)
-                    request.enqueue(object:Callback<String>{
-                        override fun onFailure(call: Call<String>, t: Throwable) {
-                            Toast.makeText(this@DemandeActivity, "error", Toast.LENGTH_LONG).show()
 
+            val  demande = DemandeEntity(obj=obj.text.toString(),msg=msg.text.toString(),idmed = 1)
+            RoomService.appDataBase.getDeamndeDao().addDemande(demande)
+           val get= RoomService.appDataBase.getDeamndeDao().getDemande()
 
-                        }
+            Toast.makeText(this@DemandeActivity, get.toString(), Toast.LENGTH_LONG).show()
 
-                        override fun onResponse(call: Call<String>, response: Response<String>) {
-                            if (response.isSuccessful)
-                            {
-                                Toast.makeText(this@DemandeActivity,"success", Toast.LENGTH_LONG).show()
-
-                            }
-                        }
-
-                    })
-
-
-
-                }
-            }
+            obj.text.clear()
+            msg.text.clear()
+            scheduleSycn()
         }
+    }
+    private fun scheduleSycn() {
+        val constraints = Constraints.Builder().
+        setRequiredNetworkType(NetworkType.CONNECTED).
+            //    setRequiresBatteryNotLow(true).
+        build()
+        val req= OneTimeWorkRequest.Builder (SyncService::class.java).
+        setConstraints(constraints).addTag("id1").
+        build()
+        val workManager = WorkManager.getInstance(this)
+        workManager.enqueueUniqueWork("work", ExistingWorkPolicy.REPLACE,req)
+
     }
 }

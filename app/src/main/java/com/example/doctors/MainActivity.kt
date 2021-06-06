@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.doctors.DataClass.Doctor
+import com.example.doctors.Retrofit.RetrofitService
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,7 +31,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<List<Doctor>>, response: Response<List<Doctor>>) {
                 if (response.isSuccessful)
-                {   val data = response.body()
+                {    Toast.makeText(this@MainActivity,"SUCCESS",Toast.LENGTH_SHORT).show()
+
+                    val data = response.body()
                     if (data!=null)
                     {
 
@@ -49,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<Doctor>>, t: Throwable) {
-                Toast.makeText(this@MainActivity,"ERREUR PAS DE DATA POUR TOI DESOLE BABY ",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity,"ERREUR",Toast.LENGTH_SHORT).show()
 
             }
 
