@@ -24,13 +24,9 @@ class SyncService(val ctx: Context, val workParamters: WorkerParameters):
 
 
     override fun startWork(): ListenableFuture<Result> {
-        println("hello")
 
         future = SettableFuture.create()
-        println("hello")
-        val demandes = RoomService.appDataBase.getDeamndeDao().getDemande()
-        Toast.makeText(ctx, demandes.toString(), Toast.LENGTH_LONG).show()
-        println("size"+demandes.size)
+        val demandes = RoomService.appDataBase.getDeamndeDao().getDemandeToSynchronize()
         addDemande(demandes.get(0))
         return future
     }
